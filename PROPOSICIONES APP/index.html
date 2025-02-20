@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lógica Proposicional</title>
+  <!-- Fuentes de Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Enlace al CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- (Opcional) Grid de Universe.io para efecto extra en el fondo -->
+  <div class="grid"></div>
+  <div class="container">
+    <h1>Lógica Proposicional</h1>
+    <div id="initial-warning" class="warning">
+      Advertencia: Coloque adecuadamente las proposiciones, conectores lógicos y paréntesis.
+    </div>
+    <!-- Cuadro de expresión modificado (inspirado en Universe.io) -->
+    <div class="expression-container" id="main">
+      <div id="input-mask"></div>
+      <div id="pink-mask"></div>
+      <!-- Área de expresión (contenteditable) -->
+      <div id="expression" contenteditable="true" spellcheck="false"></div>
+    </div>
+    <!-- Botones de operadores, proposiciones y paréntesis -->
+    <div id="buttons">
+      <div class="button-group">
+        <button class="operator" data-value="∧" data-tooltip="Conjunción">∧</button>
+        <button class="operator" data-value="∨" data-tooltip="Disyunción">∨</button>
+        <button class="operator" data-value="⊻" data-tooltip="Disyunción exclusiva">⊻</button>
+        <button class="operator" data-value="→" data-tooltip="Implicación">→</button>
+        <button class="operator" data-value="↔" data-tooltip="Equivalencia">↔</button>
+        <button class="operator" data-value="¬" data-tooltip="Negación">¬</button>
+      </div>
+      <div class="button-group">
+        <button class="proposition" data-value="p">p</button>
+        <button class="proposition" data-value="q">q</button>
+        <button class="proposition" data-value="r">r</button>
+      </div>
+      <div class="button-group">
+        <button class="parenthesis" data-value="(">(</button>
+        <button class="parenthesis" data-value=")">)</button>
+      </div>
+      <div class="button-group">
+        <button id="evaluate">Evaluar</button>
+        <button id="clear">Limpiar</button>
+      </div>
+    </div>
+    <div id="error"></div>
+    <div id="truth-table"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

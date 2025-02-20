@@ -1,0 +1,329 @@
+/* ---------- Variables globales para el fondo ---------- */
+:root {
+    --s: 200px; /* Controla el tamaño del patrón */
+    --c1: #1d1d1d;
+    --c2: #4e4f51;
+    --c3: #3c3c3c;
+  }
+  
+  /* ---------- Fondo de la página (aplicado al body) ---------- */
+  body {
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    /* Fondo con repeating conic gradients */
+    background: repeating-conic-gradient(
+        from 30deg,
+        #0000 0 120deg,
+        var(--c3) 0 180deg
+      )
+      calc(0.5 * var(--s)) calc(0.5 * var(--s) * 0.577),
+      repeating-conic-gradient(
+        from 30deg,
+        var(--c1) 0 60deg,
+        var(--c2) 0 120deg,
+        var(--c3) 0 180deg
+      );
+    background-size: var(--s) calc(var(--s) * 0.577);
+    color: #333;
+  }
+  
+  /* ---------- (Opcional) Grid extra para efecto de fondo (Universe.io) ---------- */
+  .grid {
+    height: 800px;
+    width: 800px;
+    background-image: linear-gradient(to right, #0f0f10 1px, transparent 1px),
+      linear-gradient(to bottom, #0f0f10 1px, transparent 1px);
+    background-size: 1rem 1rem;
+    background-position: center center;
+    position: absolute;
+    z-index: -1;
+    filter: blur(1px);
+  }
+  
+  /* ---------- Contenedor principal ---------- */
+  .container {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
+    /* Mantener el color de texto para contraste */
+    color: #333;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* ---------- Warning ---------- */
+  .warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+  }
+  
+  /* ---------- Cuadro de Expresión (inspirado en Universe.io) ---------- */
+  .expression-container {
+    position: relative;
+    background-color: #010201;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .expression-container:focus-within {
+    /* Efecto de glow y ligero aumento al enfocar */
+    box-shadow: 0 0 12px 3px rgba(102, 126, 234, 0.7);
+    transform: scale(1.01);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  /* El contenedor #main envuelve el input y las máscaras */
+  #main {
+    position: relative;
+  }
+  
+  /* Máscaras para efecto visual */
+  #input-mask {
+    pointer-events: none;
+    width: 100px;
+    height: 20px;
+    position: absolute;
+    background: linear-gradient(90deg, transparent, black);
+    top: 18px;
+    left: 70px;
+  }
+  
+  #pink-mask {
+    pointer-events: none;
+    width: 30px;
+    height: 20px;
+    position: absolute;
+    background: #cf30aa;
+    top: 10px;
+    left: 5px;
+    filter: blur(20px);
+    opacity: 0.8;
+    transition: all 2s;
+  }
+  
+  /* Área de expresión (contenteditable) */
+  #expression {
+    background-color: #010201; /* Fondo negro */
+    color: white;             /* Texto blanco */
+    font-size: 18px;
+    width: 100%;
+    height: 56px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    text-align: center;       /* Centra horizontalmente el texto */
+    line-height: 56px;        /* Centra verticalmente cuando el texto es corto */
+    padding: 0 10px;          /* Ajusta el padding para evitar que se corte el texto */
+    overflow: hidden;         /* Evita que se muestre contenido que se salga */
+  }
+  
+  /* ---------- Botones y sus grupos ---------- */
+  .button-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Botones Brutalistas */
+  .operator,
+  .proposition,
+  .parenthesis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    color: #e5dede;
+    font-weight: bold;
+    font-size: 1.2rem;
+    background-color: #063525;
+    border: 3px solid #42c498;
+    border-radius: 12px;
+    box-shadow: 4px 4px 1px #000000;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .operator:hover,
+  .proposition:hover,
+  .parenthesis:hover {
+    background-color: #1a5c46;
+    border-color: #030504;
+    transform: translate(-4px, -4px) rotate(1deg);
+    box-shadow: 8px 8px 0 #000000, 12px 12px 16px rgba(64, 164, 122, 0.2);
+  }
+  .operator::before,
+  .operator::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: 0.6s;
+  }
+  .operator::before {
+    left: -100%;
+  }
+  .operator::after {
+    left: 100%;
+  }
+  .operator:hover::before {
+    animation: swipeRight 1.5s infinite;
+  }
+  .operator:hover::after {
+    animation: swipeLeft 1.5s infinite;
+  }
+  @keyframes swipeRight {
+    100% {
+      transform: translateX(200%) skew(-45deg);
+    }
+  }
+  @keyframes swipeLeft {
+    100% {
+      transform: translateX(-200%) skew(-45deg);
+    }
+  }
+  #evaluate,
+  #clear {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: 3px solid;
+    border-radius: 12px;
+    box-shadow: 4px 4px 1px #000000;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  #evaluate {
+    background-color: #42c498;
+    border-color: #063525;
+    color: white;
+  }
+  #clear {
+    background-color: #ff6b6b;
+    border-color: #534d4d;
+    color: white;
+  }
+  #evaluate:hover,
+  #clear:hover {
+    transform: translate(-4px, -4px) rotate(1deg);
+    box-shadow: 8px 8px 0 #000000;
+  }
+  
+  /* ---------- Tooltip para botones ---------- */
+  .tooltip {
+    position: absolute;
+    background-color: #063525;
+    color: #e5dede;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border: 2px solid #42c498;
+    box-shadow: 4px 4px 1px #000000;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    white-space: nowrap;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    margin-bottom: 8px;
+  }
+  .operator:hover .tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+  }
+  .tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #063525;
+  }
+  
+  /* ---------- Estilos de Tabla ---------- */
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid #42c498;
+    box-shadow: 6px 6px 1px #000000;
+  }
+  th,
+  td {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #42c498;
+  }
+  th {
+    background-color: #063525;
+    color: #e5dede;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1rem;
+  }
+  tr:nth-child(even) {
+    background-color: #f0f7f4;
+  }
+  #error {
+    color: #ff6b6b;
+    margin: 1rem 0;
+    font-weight: 500;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background-color: rgba(255, 107, 107, 0.1);
+    border: 2px solid #ff6b6b;
+  }
+  
+  /* ---------- Media Query ---------- */
+  @media (max-width: 600px) {
+    .container {
+      padding: 1rem;
+    }
+    .operator,
+    .proposition,
+    .parenthesis {
+      width: 50px;
+      height: 50px;
+      font-size: 1rem;
+    }
+    #evaluate,
+    #clear {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+    }
+  }
+  
